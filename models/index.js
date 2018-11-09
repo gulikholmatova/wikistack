@@ -15,7 +15,6 @@ const Page = db.define("page", {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      isUrl: true,
       notEmpty: true
     }
   },
@@ -30,6 +29,11 @@ const Page = db.define("page", {
     type: Sequelize.ENUM("open", "closed")
   }
 });
+
+Page.beforeCreate((pageInstance) => {
+  pageInstance.slug = pageInstance.slug.replace(/\s+/g, '_').replace(/\W/g, ''); // Removes all non-alphanumeric characters from title
+  // And make whitespace underscore
+})
 
 const User = db.define("user", {
   name: {

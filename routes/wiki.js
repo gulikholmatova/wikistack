@@ -20,6 +20,7 @@ router.post('/', async (req, res, next) => {
   const page = new Page({
     title: req.body.title,
     content: req.body.content,
+    slug: req.body.title
   });
   // make sure we only redirect *after* our save is complete!
   // note: `.save` returns a promise.
