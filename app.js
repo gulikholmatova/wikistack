@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const app = express();
 const models = require("./models");
 const db = models.db;
+const wikiRouter = require('./routes/wiki');
+const userRouter = require('./routes/user');
 
 app.use(morgan("dev"));
 app.use(express.static(__dirname + "/public"));
@@ -13,6 +15,10 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Hello world!");
 });
+
+
+app.use('/wiki', wikiRouter);
+app.use('/user', userRouter);
 
 db.authenticate().then(() => {
   console.log("connected to the database");
