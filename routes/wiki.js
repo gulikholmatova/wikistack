@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  res.send("I'm /, too, and im here!");
+  res.json(req.body);
 });
 
 router.get('/add', (req, res) => {
