@@ -1,27 +1,29 @@
-const express = require("express");
-const morgan = require("morgan");
-const bodyParser = require("body-parser");
+const express = require('express');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
 const app = express();
-const models = require("./models");
+const models = require('./models');
 const db = models.db;
 const wikiRouter = require('./routes/wiki');
 const userRouter = require('./routes/user');
 
-app.use(morgan("dev"));
-app.use(express.static(__dirname + "/public"));
+app.use(morgan('dev'));
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Hello world!");
+app.get('/', (req, res) => {
+  res.send('Hello world!');
 });
-
+app.get('/wiki', (req, res) => {
+  res.redirect('/');
+});
 
 app.use('/wiki', wikiRouter);
 app.use('/user', userRouter);
 
 db.authenticate().then(() => {
-  console.log("connected to the database");
+  console.log('connected to the database');
 });
 
 const PORT = 3000;
