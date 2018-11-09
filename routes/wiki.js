@@ -20,16 +20,24 @@ router.post('/', async (req, res, next) => {
   const page = new Page({
     title: req.body.title,
     content: req.body.content,
-    slug: req.body.title
+    slug: req.body.title,
   });
   // make sure we only redirect *after* our save is complete!
   // note: `.save` returns a promise.
   try {
+    console.log(page);
     await page.save();
     res.redirect('/');
   } catch (error) {
     next(error);
   }
+});
+
+router.get('/:slug', async (req, res, next) => {
+  const foundPage = await Page.findOne({
+    where: { slug: req.params.slug },
+  });
+  res.json(foundPage);
 });
 
 module.exports = router;
